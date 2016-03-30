@@ -74,7 +74,7 @@ while k <= options.kmax
    % Selection
    P = selection(P, O, zr, options);
    
-#   warning('Iteration %d completed.', k)
+   fprintf('Iteration %d\n', k)
    k = k + 1;
 end
 

@@ -71,7 +71,7 @@ while k <= options.kmax
    % Selection and updates
    P = selection(P, O, zr, options);
       
-#   warning('Iteration %d', k)
+   fprintf('Iteration %d\n', k)
    k = k + 1;
 end
 
@@ -85,8 +85,6 @@ Xun = (Xmax - Xmin).*P.x + Xmin;
 ispar = ndset(P.f);
 fopt = P.f(:,ispar);
 xopt = Xun(:,ispar);
-
-#warning('==== The Global Search finished with %d iterations ===.', k)
 
 %=========================== Sub-functions ================================%
 function phi = fobjeval(f, x, xrange)
