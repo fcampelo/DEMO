@@ -1,10 +1,24 @@
 function [iroi, s] = find_roi(phi, zr, rho)
 %FIND_ROI Finds the points that belong to the ROI
-%    Given a set of objective values phi and a reference point zr, this
-%    function finds the points that belong to the region of interest (ROI)
+%   Given a set of objective values phi and a reference point zr, this
+%   function finds the points that belong to the region of interest (ROI).
+%	 It is applicable to both demo_par_ind and demo_par_nds.
+%
+%	 Syntax:
+%		 iroi = find_roi(phi, zr, rho)
+%		 [iroi, s] = find_roi(phi, zr, rho)
+%
+%	 Input arguments:
+%		 phi: a m x mu matrix with the objective values
+%		 zr: a m x 1 vector with the reference point
+%		 rho: a small scalar value for the ASF calculation (def.: 1e-6)
+%
+%	 Output arguments:
+%		 iroi: a mu x 1 mask with true in the points belonging to the ROI
+%		 s: a mu x 1 vector with the ASF value of each point.
 
 mu = size(phi,2);
-if nargin < 3, rho = 1e6; end
+if nargin < 3, rho = 1e-6; end
 
 s = asf(phi, zr, rho); %computes the ASF
 [~, imin] = min(s); %finds the best value

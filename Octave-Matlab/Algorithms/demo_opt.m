@@ -33,8 +33,7 @@ function [fopt, xopt] = demo_opt(f, xrange, options)
 %      xopt: the n x mu_opt matrix with the mu_opt best individuals
 %
 %   Example: Solving a DTLZ problem with 3 objectives
-%   % First, add the path with the DTLZ m files
-%   addpath('DTLZ/')
+%   % First, make sure you have the DTLZ directory in your path
 %   % Now, create a function handle for the DTLZ3 with 3 objectives
 %   f = @(x) dtlz3(x, 3);
 %   % And, the limits of the search space, which can be found using the 
@@ -87,7 +86,7 @@ while k <= options.kmax
    % Selection and updates
    P = selection(P, O, options);
       
-#   warning('Iteration %d', k)
+   fprintf('Iteration %d\n', k)
    k = k + 1;
 end
 
@@ -101,8 +100,6 @@ Xun = (Xmax - Xmin).*P.x + Xmin;
 ispar = ndset(P.f);
 fopt = P.f(:,ispar);
 xopt = Xun(:,ispar);
-
-#warning('==== The Global Search finished with %d iterations ===.', k)
 
 %=========================== Sub-functions ================================%
 function phi = fobjeval(f, x, xrange)
@@ -298,9 +295,6 @@ aux = (size(Pnew.f,2) + size(Frem,2)) - options.mu; %remaining points to fill
 if aux == 0
    Pnew.x = [Pnew.x, Xrem]; Pnew.f = [Pnew.f, Frem];
 elseif aux > 0
-#	ind = mdp(Frem, size(Frem, 2) - aux);
-#	Xrem = Xrem(:,ind);
-#	Frem = Frem(:,ind);
    for ii = 1:aux
       cdist = crowdingdistance(Frem);
       [~, imin] = min(cdist); %gets the point with smaller crowding distance
