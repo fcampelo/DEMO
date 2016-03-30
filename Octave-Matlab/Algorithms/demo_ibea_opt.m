@@ -3,30 +3,30 @@ function [fopt, xopt] = demo_ibea_opt(f, xrange, options)
 %   This function uses the Differential Evolution for Multi-objective
 %   Optimization (a.k.a. DEMO), adapted with the IBEA selection. The
 %   fitness assignment is accomplished by using the epsilon indicator.
-%   NOTE: the original IBEAis basically a NSGA-II algorithm with the
+%   NOTE: the original IBEA is basically a NSGA-II algorithm with the
 %   fitness assignment (and selection) modified. Hence, here the variation
 %   operators were substitued by those of DEMO.
 %
 %   Syntax:
-%      [fopt, xopt] = demo_ibea_opt(f, options)
+%      [fopt, xopt] = demo_ibea_opt(f, xrange)
+%		 [fopt, xopt] = demo_ibea_opt(f, xrange, options)
 %
 %   Input arguments:
 %      f: the objective function given as a handle, a .m file, inline, or
 %         anything that can be computed using the "feval" function and can
 %         handle multiple inputs
+%		 xrange: a matrix with the inferior and superior limits of search.
+%              If n is the dimension, it will be a n x 2 matrix, such
+%              that the first column contains the inferior limit, and the
+%              second, the superior one;
 %      options: a struct with internal parameters of the algorithm:
-%         .range: a matrix with the inferior and superior limits of search.
-%                 If n is the dimension, it will be a n x 2 matrix, such
-%                 that the first column contains the inferior limit, and the
-%                 second, the superior one;
 %         .F: the scale factor to be used in the mutation (default: 0.5);
 %         .CR: the crossover factor used in the recombination (def.: 0.3);
 %         .mu: the population size (number of individuals) (def.: 100);
 %         .kmax: maximum number of iterations (def.: 300);
 %         .display: 'on' to display the population while the algorithm is
 %                   being executed, and 'off' to not (default: 'off')
-%         .kappa: a fitness multiplier for the epsilon indicator (def.:
-%                 0.05)
+%         .kappa: a fitness multiplier for the epsilon indicator (def.: 0.05)
 %         If any of the parameters is not set, the default ones are used
 %         instead.
 %
@@ -73,7 +73,7 @@ while k <= options.kmax
    % Selection
    P = selection(P, O, options);
    
-#   warning('Iteration %d completed.', k)
+   fprintf('Iteration %d\n', k)
    k = k + 1;
 end
 
